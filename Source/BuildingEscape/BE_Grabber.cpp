@@ -3,11 +3,14 @@
 
 
 #include "Engine/World.h"
+#include "EngineGlobals.h"
+#include "Engine.h"
 #include <Components/ActorComponent.h>
 #include "GameFramework/Actor.h"
 //#include "Runtime/Core/Public/Math/Vector.h"
 #include "GameFramework/PlayerController.h"
 #include "BE_Grabber.h"
+#include <LogMacros.h>
 
 
 #define OUT //does nothing but helps with getplayerviewpoint out parameters 
@@ -41,6 +44,7 @@ void UBE_Grabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 	FVector PlayerViewLocation;
 	FRotator PlayerViewRotation;
 	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(OUT PlayerViewLocation, OUT PlayerViewRotation);
-	// ...
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("location: %s, rotation: %s"), *PlayerViewLocation.ToString(), *PlayerViewRotation.ToString()));
+UE_LOG(LogTemp, Warning, TEXT("Location: %s, Rotation: %s"), *PlayerViewLocation.ToString(), *PlayerViewRotation.ToString())
 }
 

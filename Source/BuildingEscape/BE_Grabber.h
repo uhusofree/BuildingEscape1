@@ -25,5 +25,5 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 private:
-	UWorld* OwnerView;
+	float Reach = 100.f; /**arms length for playerpawn can easily be extended for projectiles*/
 };

@@ -12,7 +12,8 @@
 #include <LogMacros.h>
 #include "BE_Grabber.h"
 
-
+// compile test
+// compile test2
 
 #define OUT //does nothing but helps with getplayerviewpoint out parameters 
 
@@ -42,15 +43,36 @@ void UBE_Grabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	FVector PlayerViewLocation;
-	FRotator PlayerViewRotation;
+	FVector PlayerViewPointLocation;
+	FRotator PlayerViewPointRotation;
 
-	/*GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(OUT PlayerViewLocation, OUT PlayerViewRotation);
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("location: %s, rotation: %s"), *PlayerViewLocation.ToString(), *PlayerViewRotation.ToString()));
+	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(OUT PlayerViewPointLocation, OUT PlayerViewPointRotation);  //Getting PlayersView point/Rotation in the world
+
+	/*GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("location: %s, rotation: %s"), *PlayerViewLocation.ToString(), *PlayerViewRotation.ToString()));
 UE_LOG(LogTemp, Warning, TEXT("Location: %s, Rotation: %s"), *PlayerViewLocation.ToString(), *PlayerViewRotation.ToString())*/
 
-	FVector LineTraceEnd = PlayerViewLocation + FVector(0.f, 0.f, 50.f);
+	
+	FVector LineTraceEnd = PlayerViewPointLocation + PlayerViewPointRotation.Vector() * Reach;
 
-	DrawDebugLine(GetWorld(), PlayerViewLocation, LineTraceEnd, FColor(0, 30, 155), false, -1, 0, 12.333);
+	DrawDebugLine(GetWorld(), PlayerViewPointLocation, LineTraceEnd, FColor(0, 30, 155), false, 0, 0, 2.f);
+
+	/*UE_LOG(LogTemp, Warning, TEXT("linetraceend: %s n/PlayerViewPointLocation: %s"), *LineTraceEnd.ToString(), *PlayerViewPointLocation.ToString());
+	GEngine->AddOnScreenDebugMessage(-1, .5f, FColor::Red, FString::Printf(TEXT("LineTraceEnd: %s n/PlayerviewPointlocation: %s"), *LineTraceEnd.ToString(), *PlayerViewPointLocation.ToString()));*/
+
+	///linetracesingle and followed parameters in description created names to pass in as params
+	FHitResult Hit;
+	FCollisionObjectQueryParams HitParamObject(ECollisionChannel::ECC_PhysicsBody);
+	FCollisionQueryParams TraceParameters(FName(TEXT("")), false, GetOwner());
+	GetWorld()->LineTraceSingleByObjectType(OUT Hit, PlayerViewPointLocation, LineTraceEnd, HitParamObject, TraceParameters);
+	
+	AActor* ActorHit = Hit.GetActor();
+	if (ActorHit)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("LineTraceHitresult: %s"), (*ActorHit->GetName()));
+		GEngine->AddOnScreenDebugMessage(-1, .5, FColor:: Blue, FString::Printf(TEXT("Hit Results: %s"), (*ActorHit->GetName())));
+	}
+	
+	
+
 }
 

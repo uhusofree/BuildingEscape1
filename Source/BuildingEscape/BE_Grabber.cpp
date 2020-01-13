@@ -35,6 +35,30 @@ void UBE_Grabber::BeginPlay()
 	
 	// ...
 	//UE_LOG(LogTemp, Warning, TEXT("Grabber Working"));
+
+	PhysicsHandler = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
+	if (!PhysicsHandler)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%s not foud"), *GetOwner()->GetName())
+	}
+	else
+	{
+		//PhysicsHandler is found
+	}
+
+	InputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
+
+	if (!InputComponent)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%s not found"), *GetOwner()->GetName())
+	}
+	else
+	{
+
+		//InputComponent is found
+		InputComponent->BindAction("Grab", IE_Pressed, this, &UBE_Grabber::Grab);
+		InputComponent->BindAction("Grab Release", IE_Released, this, &UBE_Grabber::Release);
+	}
 }
 
 
@@ -74,5 +98,15 @@ UE_LOG(LogTemp, Warning, TEXT("Location: %s, Rotation: %s"), *PlayerViewLocation
 	
 	
 
+}
+
+void UBE_Grabber::Grab()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Grabbed Pressed"))
+}
+
+void UBE_Grabber::Release()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Grabbed Released"))
 }
 

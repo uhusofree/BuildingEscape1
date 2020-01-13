@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include <PhysicsEngine/PhysicsHandleComponent.h>
+#include <Components/InputComponent.h>
 #include "BE_Grabber.generated.h"
 
 
@@ -25,5 +27,9 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 private:
-	float Reach = 100.f; /**arms length for playerpawn can easily be extended for projectiles*/
+	float Reach = 100.f; /**arms length for player pawn can easily be extended for projectiles*/
+	UPhysicsHandleComponent* PhysicsHandler = nullptr;
+	UInputComponent* InputComponent = nullptr;
+	void Grab(); /**Raycast and Attach*/
+	void Release();
 };

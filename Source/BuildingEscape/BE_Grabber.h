@@ -28,8 +28,18 @@ public:
 
 private:
 	float Reach = 100.f; /**arms length for player pawn can easily be extended for projectiles*/
+
 	UPhysicsHandleComponent* PhysicsHandler = nullptr;
+
 	UInputComponent* InputComponent = nullptr;
+
 	void Grab(); /**Raycast and Attach*/
+
 	void Release();
+
+	void FindPhysicsHandleComponent();
+
+	void InputHandler();/** Setup and attached input component*/
+
+	FHitResult GetFirstPhysicsBodyInReach() const; /**line trace to find collision param to pickup*/
 };

@@ -36,6 +36,10 @@ private:
 	void Grab(); /**Raycast and Attach*/
 
 	void Release();
+	///returns the start of line 
+	FVector GetReachLineStart() const;
+	///returns the end of line
+	FVector GetReachLineEnd() const;
 
 	void FindPhysicsHandleComponent();
 

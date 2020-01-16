@@ -30,6 +30,7 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	float GetTotalMassOfActorOnPlate();
 private:
 	UPROPERTY(EditAnywhere)
 		float OpenAngle = 90.f;

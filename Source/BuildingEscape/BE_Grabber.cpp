@@ -73,7 +73,7 @@ void UBE_Grabber::InputHandler()
 	else
 	{
 		InputComponent->BindAction("Grab", IE_Pressed, this, &UBE_Grabber::Grab);
-		InputComponent->BindAction("Grab Release", IE_Released, this, &UBE_Grabber::Release);
+		InputComponent->BindAction("Grab", IE_Released, this, &UBE_Grabber::Release);
 	}
 }
 

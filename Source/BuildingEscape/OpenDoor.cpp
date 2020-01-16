@@ -3,6 +3,8 @@
 
 #include "OpenDoor.h"
 #include "GameFramework/Actor.h"
+#include <LogMacros.h>
+#include <Components/PrimitiveComponent.h>
 
 // Sets default values for this component's properties
 UOpenDoor::UOpenDoor()
@@ -41,7 +43,8 @@ void UOpenDoor:: CloseDoor()
 void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	if(GetTotalMassOfActorOnPlate() > 50.f)
+
+	if(GetTotalMassOfActorOnPlate() > 50.f) //TODO make float into a parameter
 	{
 		OpenDoor();
 		LastDoorOpenTime = GetWorld()->GetTimeSeconds();
@@ -61,7 +64,12 @@ float UOpenDoor::GetTotalMassOfActorOnPlate()
 	TArray<AActor*> OverlappingActors;
 	//find all the overlapping actors
 	DoorTrigger->GetOverlappingActors(OUT OverlappingActors);
-	//iterate though them adding their mass
+	//iterate though them adding their masses
+	for (auto* Actor : OverlappingActors)
+	{
+		TotalMass += Actor->FindComponentByClass<UPrimitiveComponent>()->GetMass();
+		UE_LOG(LogTemp, Warning, TEXT("%s is on trigger"), *Actor->GetName());
+	}
 
 	return TotalMass;
 }

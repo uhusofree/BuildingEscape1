@@ -29,7 +29,8 @@ protected:
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
+	
+	/**returns mass in kilograms*/
 	float GetTotalMassOfActorOnPlate();
 private:
 	UPROPERTY(EditAnywhere)

@@ -41,5 +41,11 @@ private:
 
 	void InputHandler();/** Setup and attached input component*/
 
-	FHitResult GetFirstPhysicsBodyInReach() const; /**line trace to find collision param to pickup*/
+	FVector GetReachLineEnd(); /**return end of reach line */
+
+	FVector GetReachLineBegin();
+
+	FHitResult GetFirstPhysicsBodyInReach(); /**line trace to find collision param to pickup*/
+
+	
 };

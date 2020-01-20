@@ -37,13 +37,13 @@ private:
 
 
 	UPROPERTY(EditAnywhere)
-	ATriggerVolume* DoorTrigger;	
+	ATriggerVolume* DoorTrigger = nullptr;	
 
 	UPROPERTY(EditAnywhere)
 		float DoorCloseDelay = 1.f;
 		float LastDoorOpenTime;
 		float LastCloseDoorTime;
 
-		AActor* Owner;
+		AActor* Owner = nullptr;
 	
 };

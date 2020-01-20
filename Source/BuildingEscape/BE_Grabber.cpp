@@ -42,6 +42,8 @@ void UBE_Grabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
+	if (!PhysicsHandler) { return; }
+
 	if (PhysicsHandler->GrabbedComponent)
 	{
 		PhysicsHandler->SetTargetLocation(GetReachLineEnd()); //pick up object and move
@@ -53,7 +55,7 @@ void UBE_Grabber::FindPhysicsHandleComponent()
 	PhysicsHandler = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
 	if (PhysicsHandler == nullptr)
 	{
-		UE_LOG(LogTemp, Error, TEXT("%s not foud"), *GetOwner()->GetName());
+		UE_LOG(LogTemp, Error, TEXT("%s PhysicsHandler not fnoud"), *GetOwner()->GetName());
 	}
 }
 
@@ -68,7 +70,7 @@ void UBE_Grabber::InputHandler()
 	else
 	{
 		InputComponent->BindAction("Grab", IE_Pressed, this, &UBE_Grabber::Grab);
-		InputComponent->BindAction("Grab Release", IE_Released, this, &UBE_Grabber::Release);
+		InputComponent->BindAction("Grab", IE_Released, this, &UBE_Grabber::Release);
 	}
 }
 

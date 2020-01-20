@@ -21,16 +21,28 @@ UOpenDoor::UOpenDoor()
 void UOpenDoor::BeginPlay()
 {
 	Super::BeginPlay();
+
 	Owner = GetOwner();
+	if (DoorTrigger == nullptr)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%s Door Trigger not found"), *GetOwner()->GetName())
+	}
+
+	if (Owner == nullptr)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%s Owner not found"), *GetOwner()->GetName())
+	}
 }
 
 void UOpenDoor::OpenDoor()
 {
+	if (!Owner) { return; }
 	Owner->SetActorRotation(FRotator(0.f, OpenAngle, 0.f));
 }
 
 void UOpenDoor:: CloseDoor()
 {
+	if (!Owner) { return; }
 	Owner->SetActorRotation(FRotator(0.f,0.f,0.f));
 }
 
@@ -55,9 +67,12 @@ float UOpenDoor::GetTotalMassOfActorsOnPlate()
 	float TotalMass = 0.f;
 
 	TArray<AActor*> OverlappingActors;
-	//find all overlapping actors
-	DoorTrigger->GetOverlappingActors(OUT OverlappingActors);
 
+
+	//find all overlapping actors
+	if (DoorTrigger == nullptr) { return TotalMass; }
+	DoorTrigger->GetOverlappingActors(OUT OverlappingActors);
+	
 	for (auto* Actor : OverlappingActors)
 	{
 		TotalMass += Actor->FindComponentByClass<UPrimitiveComponent>()->GetMass();
